@@ -8,7 +8,7 @@ plugins {
 
 apply plugin: 'org.openjfx.javafxplugin'
 
-group 'com.github.bricklou'
+group 'fr.tathan.launcher'
 version '1.0.0'
 
 repositories {
