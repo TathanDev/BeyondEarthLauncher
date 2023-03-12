@@ -1,7 +1,7 @@
-package com.github.bricklou.launchertuto.ui.panel;
+package fr.tathan.launcher.ui.panel;
 
-import com.github.bricklou.launchertuto.Launcher;
-import com.github.bricklou.launchertuto.ui.PanelManager;
+import fr.tathan.launcher.Launcher;
+import fr.tathan.launcher.ui.PanelManager;
 import fr.flowarg.flowlogger.ILogger;
 import javafx.animation.FadeTransition;
 import javafx.geometry.HPos;

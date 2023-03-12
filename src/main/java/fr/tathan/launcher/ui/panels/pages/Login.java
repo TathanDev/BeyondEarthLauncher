@@ -1,20 +1,23 @@
-package com.github.bricklou.launchertuto.ui.panels.pages;
+package fr.tathan.launcher.ui.panels.pages;
 
-import com.github.bricklou.launchertuto.Launcher;
-import com.github.bricklou.launchertuto.ui.PanelManager;
-import com.github.bricklou.launchertuto.ui.panel.Panel;
-import fr.litarvan.openauth.AuthPoints;
+import com.azuriom.azauth.AuthClient;
+import com.azuriom.azauth.exception.AuthException;
 import fr.litarvan.openauth.AuthenticationException;
+import fr.tathan.launcher.Launcher;
+import fr.tathan.launcher.ui.PanelManager;
+import fr.tathan.launcher.ui.panel.Panel;
 import fr.litarvan.openauth.Authenticator;
 import fr.litarvan.openauth.microsoft.MicrosoftAuthenticator;
 import fr.litarvan.openauth.model.AuthAgent;
-import fr.litarvan.openauth.model.AuthProfile;
 import fr.litarvan.openauth.model.response.AuthResponse;
 import fr.theshark34.openlauncherlib.minecraft.AuthInfos;
 import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
@@ -24,6 +27,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -37,8 +42,7 @@ public class Login extends Panel {
     PasswordField passwordField = new PasswordField();
     Label userErrorLabel = new Label();
     Label passwordErrorLabel = new Label();
-    Button btnLogin = new Button("Connexion");
-    CheckBox authModeChk = new CheckBox("Mode crack");
+    Button btnLogin = new Button("Connection");
     Button msLoginBtn = new Button();
 
     @Override
@@ -81,21 +85,21 @@ public class Login extends Panel {
         /*
          * Login sidebar
          */
-        Label title = new Label("JavaFX Launcher");
-        title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 30f));
-        title.getStyleClass().add("login-title");
-        setCenterH(title);
-        setCanTakeAllSize(title);
-        setTop(title);
-        title.setTextAlignment(TextAlignment.CENTER);
-        title.setTranslateY(30d);
-        loginCard.getChildren().add(title);
+        ImageView logo = new ImageView(new Image("images/logo.png"));
+        setCenterH(logo);
+        setCanTakeAllSize(logo);
+        logo.setFitHeight(300d);
+        logo.setFitWidth(330d);
+        logo.setPreserveRatio(true);
+        setTop(logo);
+        logo.setTranslateY(40d);
+        loginCard.getChildren().add(logo);
 
         // Username/E-Mail
         setCanTakeAllSize(userField);
         setCenterV(userField);
         setCenterH(userField);
-        userField.setPromptText("Adresse E-Mail");
+        userField.setPromptText("E-Mail");
         userField.setMaxWidth(300);
         userField.setTranslateY(-70d);
         userField.getStyleClass().add("login-input");
@@ -114,7 +118,7 @@ public class Login extends Panel {
         setCanTakeAllSize(passwordField);
         setCenterV(passwordField);
         setCenterH(passwordField);
-        passwordField.setPromptText("Mot de passe");
+        passwordField.setPromptText("Password");
         passwordField.setMaxWidth(300);
         passwordField.setTranslateY(-15d);
         passwordField.getStyleClass().add("login-input");
@@ -137,26 +141,14 @@ public class Login extends Panel {
         btnLogin.setMaxWidth(300);
         btnLogin.setTranslateY(40d);
         btnLogin.getStyleClass().add("login-log-btn");
-        btnLogin.setOnMouseClicked(e -> this.authenticate(userField.getText(), passwordField.getText()));
-
-        setCanTakeAllSize(authModeChk);
-        setCenterV(authModeChk);
-        setCenterH(authModeChk);
-        authModeChk.getStyleClass().add("login-mode-chk");
-        authModeChk.setMaxWidth(300);
-        authModeChk.setTranslateY(85d);
-        authModeChk.selectedProperty().addListener((e, old, newValue) -> {
-            offlineAuth.set(newValue);
-            passwordField.setDisable(newValue);
-            if (newValue) {
-                userField.setPromptText("Pseudo");
-                passwordField.clear();
-            } else {
-                userField.setPromptText("Adresse E-Mail");
+        btnLogin.setOnMouseClicked(e -> {
+            try {
+                this.authenticate(userField.getText(), passwordField.getText());
+            } catch (AuthException ex) {
+                throw new RuntimeException(ex);
             }
-
-            btnLogin.setDisable(!(userField.getText().length() > 0 && (offlineAuth.get() || passwordField.getText().length() > 0)));
         });
+
 
         Separator separator = new Separator();
         setCanTakeAllSize(separator);
@@ -180,6 +172,7 @@ public class Login extends Panel {
         ImageView view = new ImageView(new Image("images/microsoft.png"));
         view.setPreserveRatio(true);
         view.setFitHeight(30d);
+
         setCanTakeAllSize(msLoginBtn);
         setCenterH(msLoginBtn);
         setCenterV(msLoginBtn);
@@ -189,7 +182,7 @@ public class Login extends Panel {
         msLoginBtn.setGraphic(view);
         msLoginBtn.setOnMouseClicked(e -> this.authenticateMS());
 
-        loginCard.getChildren().addAll(userField, userErrorLabel, passwordField, passwordErrorLabel, authModeChk, btnLogin, separator, loginWithLabel, msLoginBtn);
+        loginCard.getChildren().addAll(userField, userErrorLabel, passwordField, passwordErrorLabel,  btnLogin, separator, loginWithLabel, msLoginBtn);
     }
 
     public void updateLoginBtnState(TextField textField, Label errorLabel) {
@@ -204,51 +197,59 @@ public class Login extends Panel {
         btnLogin.setDisable(!(userField.getText().length() > 0 && (offlineAuth.get() || passwordField.getText().length() > 0)));
     }
 
-    public void authenticate(String user, String password) {
-        if (!offlineAuth.get()) {
-            Authenticator authenticator = new Authenticator(Authenticator.MOJANG_AUTH_URL, AuthPoints.NORMAL_AUTH_POINTS);
+    public void authenticate(String user, String password) throws AuthException {
+        AuthClient authenticator = new AuthClient("https://odysseyus.fr");
 
-            try {
-                AuthResponse response = authenticator.authenticate(AuthAgent.MINECRAFT, user, password, null);
 
-                saver.set("accessToken", response.getAccessToken());
-                saver.set("clientToken", response.getClientToken());
-                saver.save();
+        try {
 
-                AuthInfos infos = new AuthInfos(
-                        response.getSelectedProfile().getName(),
-                        response.getAccessToken(),
-                        response.getClientToken(),
-                        response.getSelectedProfile().getId()
-                );
+            AuthInfos infos = authenticator.login(user, password, () -> {
+                // Called when 2FA is enabled
+                String code = null;
 
-                Launcher.getInstance().setAuthInfos(infos);
+                TextInputDialog inputdialog = new TextInputDialog("");
+                inputdialog.setContentText("A2F: ");
+                inputdialog.setHeaderText("A2F requis");
+                inputdialog.show();
 
-                this.logger.info("Hello " + infos.getUsername());
 
-                panelManager.showPanel(new App());
-            } catch (AuthenticationException e) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur");
-                alert.setHeaderText("Une erreur est survenu lors de la connexion");
-                alert.setContentText(e.getMessage());
-                alert.show();
-            }
-        } else {
-            AuthInfos infos = new AuthInfos(
-                    userField.getText(),
-                    UUID.randomUUID().toString(),
-                    UUID.randomUUID().toString()
-            );
-            saver.set("offline-username", infos.getUsername());
+                while (code == null || code.isEmpty()) {
+
+
+
+                    code = inputdialog.getEditor().getText();
+
+                }
+
+                return code;
+            }, AuthInfos.class);
+
+
+            saver.set("accessToken", infos.getAccessToken());
+            saver.set("Username", infos.getUsername());
+            saver.set("UUID", infos.getUuid());
             saver.save();
+
             Launcher.getInstance().setAuthInfos(infos);
 
             this.logger.info("Hello " + infos.getUsername());
 
             panelManager.showPanel(new App());
+
+
+            //inputdialog.getEditor().getText()
+
+        } catch(AuthException e) {
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Une erreur est survenu lors de la connexion");
+            alert.setContentText(e.getMessage());
+            alert.show();
+
         }
     }
+
 
     public void authenticateMS() {
         MicrosoftAuthenticator authenticator = new MicrosoftAuthenticator();

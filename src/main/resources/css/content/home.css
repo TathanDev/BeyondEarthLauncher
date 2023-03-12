@@ -6,7 +6,7 @@
     -fx-background-radius: 10px;
     -fx-font-size: 16px;
     -fx-text-fill: #F5F5F5;
-    -fx-background-color: #85AE51;
+    -fx-background-color: #3a7cff;
 }
 
 .play-icon {
@@ -14,7 +14,7 @@
 }
 
 .play-btn:hover {
-    -fx-background-color: #98BB6D;
+    -fx-background-color: #5a92ff;
 }
 
 .download-progress {
@@ -26,7 +26,7 @@
 }
 
 .download-progress > .bar {
-    -fx-background-color: #85AE51;
+    -fx-background-color: #3a7cff;
     -fx-background-insets: 0;
     -fx-background-radius: 30px;
 }

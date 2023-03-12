@@ -1,11 +1,16 @@
-package com.github.bricklou.launchertuto.ui.panels.pages.content;
+package fr.tathan.launcher.ui.panels.pages.content;
 
-import com.github.bricklou.launchertuto.Launcher;
-import com.github.bricklou.launchertuto.game.MinecraftInfos;
-import com.github.bricklou.launchertuto.ui.PanelManager;
+import fr.flowarg.flowupdater.download.json.CurseModPackInfo;
+import fr.flowarg.flowupdater.download.json.OptiFineInfo;
+import fr.flowarg.flowupdater.utils.ModFileDeleter;
+import fr.flowarg.openlauncherlib.NoFramework;
+import fr.tathan.launcher.Launcher;
+import fr.tathan.launcher.game.MinecraftInfos;
+import fr.tathan.launcher.ui.PanelManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.flowarg.flowupdater.FlowUpdater;
+import fr.flowarg.flowupdater.download.DownloadList;
 import fr.flowarg.flowupdater.download.IProgressCallback;
 import fr.flowarg.flowupdater.download.Step;
 import fr.flowarg.flowupdater.download.json.CurseFileInfo;
@@ -29,6 +34,9 @@ import javafx.scene.layout.RowConstraints;
 
 import java.nio.file.Path;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Home extends ContentPanel {
@@ -107,6 +115,7 @@ public class Home extends ContentPanel {
     }
 
     public void update() {
+
         IProgressCallback callback = new IProgressCallback() {
             private final DecimalFormat decimalFormat = new DecimalFormat("#.#");
             private String stepTxt = "";
@@ -117,15 +126,17 @@ public class Home extends ContentPanel {
                 Platform.runLater(() -> {
                     stepTxt = StepInfo.valueOf(step.name()).getDetails();
                     setStatus(String.format("%s (%s)", stepTxt, percentTxt));
+
                 });
             }
 
-            @Override
-            public void update(long downloaded, long max) {
+
+            public void update(DownloadList.DownloadInfo info) {
+                double progress = info.getDownloadedBytes() / info.getTotalToDownloadBytes();
                 Platform.runLater(() -> {
-                    percentTxt = decimalFormat.format(downloaded * 100.d / max) + "%";
+                    percentTxt = decimalFormat.format(info.getDownloadedFiles() * 100.d / info.getTotalToDownloadFiles()) + "%";
                     setStatus(String.format("%s (%s)", stepTxt, percentTxt));
-                    setProgress(downloaded, max);
+                    setProgress(info.getDownloadedFiles(), info.getTotalToDownloadFiles());
                 });
             }
 
@@ -136,71 +147,86 @@ public class Home extends ContentPanel {
                     fileLabel.setText("..." + p.replace(Launcher.getInstance().getLauncherDir().toFile().getAbsolutePath(), ""));
                 });
             }
+
         };
 
         try {
-            final VanillaVersion vanillaVersion = new VanillaVersion.VanillaVersionBuilder()
-                    .withName(MinecraftInfos.GAME_VERSION)
-                    .withVersionType(MinecraftInfos.VERSION_TYPE)
-                    .build();
+
+
+        final VanillaVersion version = new VanillaVersion.VanillaVersionBuilder()
+                .withName(MinecraftInfos.GAME_VERSION)
+                .build();
+
+        final  List<CurseFileInfo> modInfos = new ArrayList<>();
+
+        modInfos.add(new CurseFileInfo( 377448,  4428616));
+            modInfos.add(new CurseFileInfo( 228756,  3966365));
+            modInfos.add(new CurseFileInfo( 268560,  4385637));
+
+            modInfos.add(new CurseFileInfo( 634062,  4082456));
+            modInfos.add(new CurseFileInfo( 223852,  3884263));
+
+
+
             final UpdaterOptions options = new UpdaterOptions.UpdaterOptionsBuilder()
-                    .build();
+                .build();
 
-            List<CurseFileInfo> curseMods = CurseFileInfo.getFilesFromJson(MinecraftInfos.CURSE_MODS_LIST_URL);
-            List<Mod> mods = Mod.getModsFromJson(MinecraftInfos.MODS_LIST_URL);
 
-            final AbstractForgeVersion forge = new ForgeVersionBuilder(MinecraftInfos.FORGE_VERSION_TYPE)
-                    .withForgeVersion(MinecraftInfos.FORGE_VERSION)
-                    .withCurseMods(curseMods)
-                    .withMods(mods)
-                    .build();
+        final AbstractForgeVersion forge = new ForgeVersionBuilder(MinecraftInfos.FORGE_VERSION_TYPE)
+                .withForgeVersion(MinecraftInfos.FORGE_VERSION)
+                .withCurseMods(modInfos)
+                //.withCurseMods(CurseFileInfo.getFilesFromJson("https://odysseyus.fr/cursefiles.json"))
+                //.withOptiFine(new OptiFineInfo(MinecraftInfos.OPTIFINE_VERSION, false))
+                .withFileDeleter(new ModFileDeleter(false))
+                //.withCurseModPack(new CurseModPackInfo( 690756, 4411312, true))
+                .build();
 
-            final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
-                    .withVanillaVersion(vanillaVersion)
-                    .withForgeVersion(forge)
-                    .withLogger(Launcher.getInstance().getLogger())
-                    .withProgressCallback(callback)
-                    .withUpdaterOptions(options)
-                    .build();
+        final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
+                .withVanillaVersion(version)
+                .withLogger(Launcher.getInstance().getLogger())
+                .withProgressCallback(callback)
+                .withModLoaderVersion(forge)
+                .withUpdaterOptions(options)
+                //.withPostExecutions(Collections.singletonList(postExecutions))
+                .build();
 
-            updater.update(Launcher.getInstance().getLauncherDir());
-            this.startGame(updater.getVanillaVersion().getName());
-        } catch (Exception exception) {
-            Launcher.getInstance().getLogger().err(exception.toString());
-            exception.printStackTrace();
-            Platform.runLater(() -> panelManager.getStage().show());
-        }
+        updater.update(Launcher.getInstance().getLauncherDir());
+        this.startGame(MinecraftInfos.GAME_VERSION);
+
+
+    } catch (Exception exception) {
+        Launcher.getInstance().getLogger().printStackTrace(exception);
+        Platform.runLater(() -> panelManager.getStage().show());
     }
+
+}
 
     public void startGame(String gameVersion) {
         GameInfos infos = new GameInfos(
-                "launcher-fx",
+                MinecraftInfos.SERVER_NAME,
                 true,
-                new GameVersion(gameVersion, MinecraftInfos.OLL_GAME_TYPE.setNFVD(MinecraftInfos.OLL_FORGE_DISCRIMINATOR)),
-                new GameTweak[]{}
+                new GameVersion(gameVersion, MinecraftInfos.OLL_GAME_TYPE),
+                new GameTweak[]{GameTweak.FORGE}
         );
 
         try {
-            ExternalLaunchProfile profile = MinecraftLauncher.createExternalProfile(infos, GameFolder.FLOW_UPDATER, Launcher.getInstance().getAuthInfos());
-            profile.getVmArgs().add(this.getRamArgsFromSaver());
-            ExternalLauncher launcher = new ExternalLauncher(profile);
+            final NoFramework noFramework = new NoFramework(Launcher.getInstance().getLauncherDir(), Launcher.getInstance().getAuthInfos(), GameFolder.FLOW_UPDATER);
+            noFramework.getAdditionalVmArgs().add(this.getRamArgsFromSaver());
+            //noFramework.getAdditionalArgs().addAll(Arrays.asList("--server=panel.odysseyus.fr", "--port=25569"));
+            Process p = noFramework.launch(MinecraftInfos.GAME_VERSION, MinecraftInfos.FORGE_VERSION.split("-")[1], NoFramework.ModLoader.FORGE);
 
             Platform.runLater(() -> panelManager.getStage().hide());
 
-            Process p = launcher.launch();
 
-            Platform.runLater(() -> {
-                try {
-                    p.waitFor();
-                    Platform.exit();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            });
+            p.waitFor();
+            Platform.runLater(Platform::exit);
         } catch (Exception exception) {
             exception.printStackTrace();
             Launcher.getInstance().getLogger().err(exception.toString());
         }
+
+
+
     }
 
     public String getRamArgsFromSaver() {

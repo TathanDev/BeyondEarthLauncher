@@ -1,4 +1,4 @@
-package com.github.bricklou.launchertuto.ui.panel;
+package fr.tathan.launcher.ui.panel;
 
 import javafx.scene.Node;
 

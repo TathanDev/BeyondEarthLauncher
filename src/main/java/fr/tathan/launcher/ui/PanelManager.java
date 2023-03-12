@@ -1,8 +1,8 @@
-package com.github.bricklou.launchertuto.ui;
+package fr.tathan.launcher.ui;
 
-import com.github.bricklou.launchertuto.Launcher;
-import com.github.bricklou.launchertuto.ui.panel.IPanel;
-import com.github.bricklou.launchertuto.ui.panels.partials.TopBar;
+import fr.tathan.launcher.Launcher;
+import fr.tathan.launcher.ui.panel.IPanel;
+import fr.tathan.launcher.ui.panels.partials.TopBar;
 import com.goxr3plus.fxborderlessscene.borderless.BorderlessScene;
 import fr.flowarg.flowcompat.Platform;
 import javafx.geometry.VPos;

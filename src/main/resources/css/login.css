@@ -34,11 +34,11 @@
     -fx-background-radius: 10px;
     -fx-font-size: 16px;
     -fx-text-fill: #F5F5F5;
-    -fx-background-color: #85AE51;
+    -fx-background-color: #3a7cff;
 }
 
 .login-card .login-log-btn:hover {
-    -fx-background-color: #98BB6D;
+    -fx-background-color: #5a92ff;
 }
 
 .login-card .login-log-btn:disabled {
@@ -47,7 +47,7 @@
 }
 
 .login-card .login-separator {
-    -fx-border-color: #98BB6D;
+    -fx-border-color: #3a7cff;
     -fx-border-width: 1 0 0 0 ;
 }
 
@@ -74,7 +74,7 @@
 }
 
 .login-mode-chk:selected .box {
-    -fx-background-color: #98BB6D;
+    -fx-background-color: #3a7cff;
 }
 
 .login-mode-chk:selected .box .mark {

@@ -1,8 +1,8 @@
-package com.github.bricklou.launchertuto;
+package fr.tathan.launcher;
 
-import com.github.bricklou.launchertuto.ui.PanelManager;
-import com.github.bricklou.launchertuto.ui.panels.pages.App;
-import com.github.bricklou.launchertuto.ui.panels.pages.Login;
+import fr.tathan.launcher.ui.PanelManager;
+import fr.tathan.launcher.ui.panels.pages.App;
+import fr.tathan.launcher.ui.panels.pages.Login;
 import fr.flowarg.flowlogger.ILogger;
 import fr.flowarg.flowlogger.Logger;
 import fr.litarvan.openauth.AuthPoints;
@@ -19,21 +19,20 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.nio.file.Path;
 import java.util.UUID;
 
 public class Launcher extends Application {
     private static Launcher instance;
     private final ILogger logger;
-    private final Path launcherDir = GameDirGenerator.createGameDir("launcher-fx", true);
+    private final Path launcherDir = GameDirGenerator.createGameDir("beyond_earth", true);
     private final Saver saver;
     private PanelManager panelManager;
     private AuthInfos authInfos = null;
 
     public Launcher() {
         instance = this;
-        this.logger = new Logger("[LauncherFX]", this.launcherDir.resolve("launcher.log"));
+        this.logger = new Logger("[BeyondEarth]", this.launcherDir.resolve("launcher.log"));
         if (!this.launcherDir.toFile().exists()) {
             if (!this.launcherDir.toFile().mkdir()) {
                 this.logger.err("Unable to create launcher folder");

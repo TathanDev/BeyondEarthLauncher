@@ -1,11 +1,11 @@
-package com.github.bricklou.launchertuto.ui.panels.pages;
+package fr.tathan.launcher.ui.panels.pages;
 
-import com.github.bricklou.launchertuto.Launcher;
-import com.github.bricklou.launchertuto.ui.PanelManager;
-import com.github.bricklou.launchertuto.ui.panel.Panel;
-import com.github.bricklou.launchertuto.ui.panels.pages.content.ContentPanel;
-import com.github.bricklou.launchertuto.ui.panels.pages.content.Home;
-import com.github.bricklou.launchertuto.ui.panels.pages.content.Settings;
+import fr.tathan.launcher.Launcher;
+import fr.tathan.launcher.ui.PanelManager;
+import fr.tathan.launcher.ui.panel.Panel;
+import fr.tathan.launcher.ui.panels.pages.content.ContentPanel;
+import fr.tathan.launcher.ui.panels.pages.content.Home;
+import fr.tathan.launcher.ui.panels.pages.content.Settings;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.theshark34.openlauncherlib.util.Saver;
@@ -81,7 +81,7 @@ public class App extends Panel {
          * Side menu
          */
         // Titre
-        Label title = new Label("JavaFX Launcher");
+        Label title = new Label("Beyond Earth Server");
         title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 30f));
         title.getStyleClass().add("home-title");
         setCenterH(title);
@@ -92,7 +92,7 @@ public class App extends Panel {
         sidemenu.getChildren().add(title);
 
         // Navigation
-        homeBtn = new Button("Accueil");
+        homeBtn = new Button("Home");
         homeBtn.getStyleClass().add("sidemenu-nav-btn");
         homeBtn.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.HOME));
         setCanTakeAllSize(homeBtn);
@@ -100,7 +100,7 @@ public class App extends Panel {
         homeBtn.setTranslateY(90d);
         homeBtn.setOnMouseClicked(e -> setPage(new Home(), homeBtn));
 
-        settingsBtn = new Button("Paramètres");
+        settingsBtn = new Button("Settings");
         settingsBtn.getStyleClass().add("sidemenu-nav-btn");
         settingsBtn.setGraphic(new FontAwesomeIconView(FontAwesomeIcon.GEARS));
         setCanTakeAllSize(settingsBtn);
@@ -119,7 +119,7 @@ public class App extends Panel {
             userPane.getStyleClass().add("user-pane");
             setBottom(userPane);
 
-            String avatarUrl = "https://minotar.net/avatar/" + (
+            String avatarUrl = "https://minotar.net/helm/" + (
                     saver.get("offline-username") != null ?
                             "MHF_Steve.png" :
                             Launcher.getInstance().getAuthInfos().getUuid() + ".png"

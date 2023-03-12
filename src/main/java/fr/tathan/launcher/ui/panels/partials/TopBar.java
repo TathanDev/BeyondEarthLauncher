@@ -1,7 +1,7 @@
-package com.github.bricklou.launchertuto.ui.panels.partials;
+package fr.tathan.launcher.ui.panels.partials;
 
-import com.github.bricklou.launchertuto.ui.PanelManager;
-import com.github.bricklou.launchertuto.ui.panel.Panel;
+import fr.tathan.launcher.ui.PanelManager;
+import fr.tathan.launcher.ui.panel.Panel;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.scene.control.Label;
@@ -45,7 +45,7 @@ public class TopBar extends Panel {
         this.layout.getChildren().add(imageView);
 
         // TopBar: center
-        Label title = new Label("JavaFx Launcher");
+        Label title = new Label("Beyond Earth Launcher");
         title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 18f));
         title.setStyle("-fx-text-fill: white;");
         setCenterH(title);

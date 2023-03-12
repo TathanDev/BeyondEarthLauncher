@@ -1,7 +1,7 @@
-package com.github.bricklou.launchertuto.ui.panels.pages.content;
+package fr.tathan.launcher.ui.panels.pages.content;
 
-import com.github.bricklou.launchertuto.Launcher;
-import com.github.bricklou.launchertuto.ui.PanelManager;
+import fr.tathan.launcher.Launcher;
+import fr.tathan.launcher.ui.PanelManager;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import fr.theshark34.openlauncherlib.util.Saver;
@@ -46,7 +46,7 @@ public class Settings extends ContentPanel {
         this.layout.getChildren().add(contentPane);
 
         // Titre
-        Label title = new Label("Paramètres");
+        Label title = new Label("Settings");
         title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 25f));
         title.getStyleClass().add("settings-title");
         setLeft(title);
@@ -58,7 +58,7 @@ public class Settings extends ContentPanel {
         contentPane.getChildren().add(title);
 
         // RAM
-        Label ramLabel = new Label("Mémoire max");
+        Label ramLabel = new Label("Memory Max");
         ramLabel.getStyleClass().add("settings-labels");
         setLeft(ramLabel);
         setCanTakeAllSize(ramLabel);
@@ -106,7 +106,7 @@ public class Settings extends ContentPanel {
         /*
          * Save Button
          */
-        Button saveBtn = new Button("Enregistrer");
+        Button saveBtn = new Button("Save");
         saveBtn.getStyleClass().add("save-btn");
         FontAwesomeIconView iconView = new FontAwesomeIconView(FontAwesomeIcon.SAVE);
         iconView.getStyleClass().add("save-icon");

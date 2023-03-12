@@ -1,4 +1,4 @@
-package com.github.bricklou.launchertuto;
+package fr.tathan.launcher;
 
 import javafx.application.Application;
 
@@ -12,7 +12,8 @@ public class Main {
         } catch (ClassNotFoundException e) {
             JOptionPane.showMessageDialog(
                     null,
-                    "Erreur:\n" + e.getMessage() + " not found",
+                    "Erreur:\n" + e.getMessage() + " not found\n" +
+                            "Please install JavaFX 17 or higher",
                     "Erreur",
                     JOptionPane.ERROR_MESSAGE
             );
