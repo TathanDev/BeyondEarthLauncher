@@ -159,7 +159,7 @@ public class Login extends Panel {
         separator.setTranslateY(110d);
 
         // Login with label
-        Label loginWithLabel = new Label("Ou se connecter avec:".toUpperCase());
+        Label loginWithLabel = new Label("Or connect with:".toUpperCase());
         setCanTakeAllSize(loginWithLabel);
         setCenterV(loginWithLabel);
         setCenterH(loginWithLabel);
@@ -189,7 +189,7 @@ public class Login extends Panel {
         if (offlineAuth.get() && textField == passwordField) return;
 
         if (textField.getText().length() == 0) {
-            errorLabel.setText("Le champ ne peut être vide");
+            errorLabel.setText("This field cannot be empty");
         } else {
             errorLabel.setText("");
         }
@@ -209,7 +209,7 @@ public class Login extends Panel {
 
                 TextInputDialog inputdialog = new TextInputDialog("");
                 inputdialog.setContentText("A2F: ");
-                inputdialog.setHeaderText("A2F requis");
+                inputdialog.setHeaderText("A2F required");
                 inputdialog.show();
 
 
@@ -242,8 +242,8 @@ public class Login extends Panel {
         } catch(AuthException e) {
 
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Une erreur est survenu lors de la connexion");
+            alert.setTitle("Error");
+            alert.setHeaderText("An error occurred during the connection");
             alert.setContentText(e.getMessage());
             alert.show();
 
@@ -257,7 +257,7 @@ public class Login extends Panel {
             if (error != null) {
                 Launcher.getInstance().getLogger().err(error.toString());
                 Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Erreur");
+                alert.setTitle("Error");
                 alert.setContentText(error.getMessage());
                 alert.show();
                 return;
