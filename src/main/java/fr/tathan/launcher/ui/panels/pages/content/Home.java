@@ -160,8 +160,15 @@ public class Home extends ContentPanel {
         final  List<CurseFileInfo> modInfos = new ArrayList<>();
 
         modInfos.add(new CurseFileInfo( 377448,  4428616));
+            //Iron Chest
             modInfos.add(new CurseFileInfo( 228756,  3966365));
-            modInfos.add(new CurseFileInfo( 268560,  4385637));
+            //modInfos.add(new CurseFileInfo( 268560,  4385637));
+            //Giselle Addon
+            modInfos.add(new CurseFileInfo( 546554,  4399930));
+            //Pipez
+            modInfos.add(new CurseFileInfo( 443900,  4064952));
+            //LightFall Client
+            modInfos.add(new CurseFileInfo( 523230,  4024418));
 
             modInfos.add(new CurseFileInfo( 634062,  4082456));
             modInfos.add(new CurseFileInfo( 223852,  3884263));
@@ -177,7 +184,7 @@ public class Home extends ContentPanel {
                 .withCurseMods(modInfos)
                 //.withCurseMods(CurseFileInfo.getFilesFromJson("https://odysseyus.fr/cursefiles.json"))
                 //.withOptiFine(new OptiFineInfo(MinecraftInfos.OPTIFINE_VERSION, false))
-                .withFileDeleter(new ModFileDeleter(false))
+                .withFileDeleter(new ModFileDeleter(true))
                 //.withCurseModPack(new CurseModPackInfo( 690756, 4411312, true))
                 .build();
 
@@ -212,7 +219,7 @@ public class Home extends ContentPanel {
         try {
             final NoFramework noFramework = new NoFramework(Launcher.getInstance().getLauncherDir(), Launcher.getInstance().getAuthInfos(), GameFolder.FLOW_UPDATER);
             noFramework.getAdditionalVmArgs().add(this.getRamArgsFromSaver());
-            //noFramework.getAdditionalArgs().addAll(Arrays.asList("--server=panel.odysseyus.fr", "--port=25569"));
+            noFramework.getAdditionalArgs().addAll(Arrays.asList("--server=51.195.65.38", "--port=25565"));
             Process p = noFramework.launch(MinecraftInfos.GAME_VERSION, MinecraftInfos.FORGE_VERSION.split("-")[1], NoFramework.ModLoader.FORGE);
 
             Platform.runLater(() -> panelManager.getStage().hide());
