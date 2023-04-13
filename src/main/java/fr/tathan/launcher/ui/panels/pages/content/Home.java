@@ -182,11 +182,8 @@ public class Home extends ContentPanel {
 
         final AbstractForgeVersion forge = new ForgeVersionBuilder(MinecraftInfos.FORGE_VERSION_TYPE)
                 .withForgeVersion(MinecraftInfos.FORGE_VERSION)
-                .withCurseMods(CurseFileInfo.getFilesFromJson("https://cdn.discordapp.com/attachments/1083449500934361239/1095759976686964837/cursefile.json"))
-                //.withCurseMods(CurseFileInfo.getFilesFromJson("https://odysseyus.fr/cursefiles.json"))
-                //.withOptiFine(new OptiFineInfo(MinecraftInfos.OPTIFINE_VERSION, false))
+                .withCurseMods(CurseFileInfo.getFilesFromJson(MinecraftInfos.MOD_INFOS))
                 .withFileDeleter(new ModFileDeleter(true))
-                //.withCurseModPack(new CurseModPackInfo( 690756, 4411312, true))
                 .build();
 
         final FlowUpdater updater = new FlowUpdater.FlowUpdaterBuilder()
@@ -195,7 +192,6 @@ public class Home extends ContentPanel {
                 .withProgressCallback(callback)
                 .withModLoaderVersion(forge)
                 .withUpdaterOptions(options)
-                //.withPostExecutions(Collections.singletonList(postExecutions))
                 .build();
 
         updater.update(Launcher.getInstance().getLauncherDir());
