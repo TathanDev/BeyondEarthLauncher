@@ -157,9 +157,10 @@ public class Home extends ContentPanel {
                 .withName(MinecraftInfos.GAME_VERSION)
                 .build();
 
-        final  List<CurseFileInfo> modInfos = new ArrayList<>();
+        //final  List<CurseFileInfo> modInfos = new ArrayList<>();
 
-        modInfos.add(new CurseFileInfo( 377448,  4428616));
+        /**
+            modInfos.add(new CurseFileInfo( 377448,  4428616));
             //Iron Chest
             modInfos.add(new CurseFileInfo( 228756,  3966365));
             //modInfos.add(new CurseFileInfo( 268560,  4385637));
@@ -172,7 +173,7 @@ public class Home extends ContentPanel {
 
             modInfos.add(new CurseFileInfo( 634062,  4082456));
             modInfos.add(new CurseFileInfo( 223852,  3884263));
-
+        */
 
 
             final UpdaterOptions options = new UpdaterOptions.UpdaterOptionsBuilder()
@@ -181,7 +182,7 @@ public class Home extends ContentPanel {
 
         final AbstractForgeVersion forge = new ForgeVersionBuilder(MinecraftInfos.FORGE_VERSION_TYPE)
                 .withForgeVersion(MinecraftInfos.FORGE_VERSION)
-                .withCurseMods(modInfos)
+                .withCurseMods(CurseFileInfo.getFilesFromJson("https://cdn.discordapp.com/attachments/1083449500934361239/1095759976686964837/cursefile.json"))
                 //.withCurseMods(CurseFileInfo.getFilesFromJson("https://odysseyus.fr/cursefiles.json"))
                 //.withOptiFine(new OptiFineInfo(MinecraftInfos.OPTIFINE_VERSION, false))
                 .withFileDeleter(new ModFileDeleter(true))

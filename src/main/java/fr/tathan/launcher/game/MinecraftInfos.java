@@ -17,6 +17,9 @@ public class MinecraftInfos {
     public static final String FORGE_VERSION = "1.19.2-43.2.1";
     public static  final String SERVER_NAME = "BeyondEarth";
 
+    public static  final String MOD_INFOS = "https://cdn.discordapp.com/attachments/1083449500934361239/1095759976686964837/cursefile.json";
+
+
 
 }
 

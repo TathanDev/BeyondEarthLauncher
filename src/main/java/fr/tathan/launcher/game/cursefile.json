@@ -1,0 +1,36 @@
+{
+  "curseFiles": [
+    {
+      "projectID":377448,
+      "fileID": 4428616
+    },
+    {
+      ///Iron Chest
+      "projectID":228756,
+      "fileID": 3966365
+    },
+    {
+      //Giselle Addon
+      "projectID":546554,
+      "fileID": 4399930
+    },
+    {
+      //Pipez
+      "projectID":443900,
+      "fileID": 4064952
+    },
+    {
+      //LightFall Client
+      "projectID":523230,
+      "fileID": 4024418
+    },
+    {
+      "projectID":634062,
+      "fileID": 4082456
+    },
+    {
+      "projectID":223852,
+      "fileID": 3884263
+    }
+  ]
+}
