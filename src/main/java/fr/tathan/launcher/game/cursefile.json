@@ -1,8 +1,9 @@
 {
   "curseFiles": [
     {
+      //Beyond Earth
       "projectID":377448,
-      "fileID": 4428616
+      "fileID": 4484833
     },
     {
       ///Iron Chest
@@ -25,12 +26,48 @@
       "fileID": 4024418
     },
     {
+      //No Chat Report
       "projectID":634062,
       "fileID": 4082456
     },
     {
+      //Storage Drawer
       "projectID":223852,
       "fileID": 3884263
+    },
+    { //Jade
+      "projectID":324717,
+      "fileID": 4433884
+    },
+    {
+      //Corpse
+      "projectID":316582,
+      "fileID": 3920717
+    },
+    {
+      //Canary
+      "projectID":665658,
+      "fileID": 4421576
+    },
+    {
+      //Ferrite Core
+      "projectID":429235,
+      "fileID": 4117906
+    },
+    {
+      //Pluto
+      "projectID":682881,
+      "fileID": 4435275
+    },
+    {
+      //Saturn
+      "projectID":670986,
+      "fileID": 3981973
+    },
+    {
+      //Smooth Boot (Reloaded)
+      "projectID":633412,
+      "fileID": 4162940
     }
   ]
 }
