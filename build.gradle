@@ -9,7 +9,7 @@ plugins {
 apply plugin: 'org.openjfx.javafxplugin'
 
 group 'fr.tathan.launcher'
-version '1.0.2'
+version '1.0.3'
 
 repositories {
     mavenCentral()

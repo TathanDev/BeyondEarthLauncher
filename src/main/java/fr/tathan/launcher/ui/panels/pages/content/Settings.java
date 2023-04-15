@@ -78,7 +78,7 @@ public class Settings extends ContentPanel {
             comboBox.getItems().add(i/1024.0+" Go");
         }
 
-        int val = 1024;
+        int val = 2048;
         try {
             if (saver.get("maxRam") != null) {
                 val = Integer.parseInt(saver.get("maxRam"));
