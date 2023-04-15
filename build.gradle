@@ -9,7 +9,7 @@ plugins {
 apply plugin: 'org.openjfx.javafxplugin'
 
 group 'fr.tathan.launcher'
-version '1.0.3'
+version '1.0.4'
 
 repositories {
     mavenCentral()
@@ -19,6 +19,10 @@ repositories {
     }
     maven {
         url 'https://litarvan.github.io/maven'
+    }
+    mavenCentral()
+    maven {
+        url "https://alwyn974.github.io/maven/"
     }
 }
 
@@ -32,6 +36,9 @@ dependencies {
     implementation 'com.github.goxr3plus:FX-BorderlessScene:4+'
     implementation 'com.github.oshi:oshi-core:5+'
     implementation 'com.azuriom:azauth:1.0.0'
+
+    implementation 're.alwyn974.minecraftserverping:MinecraftServerPing:2.0.0'
+
 
 }
 

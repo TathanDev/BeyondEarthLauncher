@@ -26,12 +26,17 @@ import fr.theshark34.openlauncherlib.util.Saver;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import re.alwyn974.minecraftserverping.MinecraftServerPing;
+import re.alwyn974.minecraftserverping.MinecraftServerPingInfos;
+import re.alwyn974.minecraftserverping.MinecraftServerPingOptions;
 
+import java.io.IOException;
 import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -45,6 +50,10 @@ public class Home extends ContentPanel {
     ProgressBar progressBar = new ProgressBar();
     Label stepLabel = new Label();
     Label fileLabel = new Label();
+    Label serverInfo = new Label();
+
+
+
     boolean isDownloading = false;
 
     @Override
@@ -60,6 +69,8 @@ public class Home extends ContentPanel {
     @Override
     public void init(PanelManager panelManager) {
         super.init(panelManager);
+
+
 
         RowConstraints rowConstraints = new RowConstraints();
         rowConstraints.setValignment(VPos.CENTER);
@@ -88,6 +99,7 @@ public class Home extends ContentPanel {
         setCenterH(fileLabel);
         setCanTakeAllSize(fileLabel);
 
+
         this.showPlayButton();
     }
 
@@ -106,10 +118,21 @@ public class Home extends ContentPanel {
     }
 
     private void play() {
+        try {
+            MinecraftServerPingInfos data = new MinecraftServerPing().getPing(new MinecraftServerPingOptions().setHostname("51.195.65.38").setPort(25565));
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            Alert warning = new Alert(Alert.AlertType.WARNING);
+            warning.setHeaderText("The server is currently offline");
+            warning.setContentText("You can still play solo but you wont be able to join the server");
+            warning.show();
+
+        }
         isDownloading = true;
         boxPane.getChildren().clear();
         setProgress(0, 0);
-        boxPane.getChildren().addAll(progressBar, stepLabel, fileLabel);
+        boxPane.getChildren().addAll(progressBar, stepLabel, fileLabel, serverInfo);
 
         Platform.runLater(() -> new Thread(this::update).start());
     }

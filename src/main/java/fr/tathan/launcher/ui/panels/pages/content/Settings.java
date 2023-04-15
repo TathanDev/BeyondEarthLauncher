@@ -47,6 +47,7 @@ public class Settings extends ContentPanel {
 
         // Titre
         Label title = new Label("Settings");
+
         title.setFont(Font.font("Consolas", FontWeight.BOLD, FontPosture.REGULAR, 25f));
         title.getStyleClass().add("settings-title");
         setLeft(title);
