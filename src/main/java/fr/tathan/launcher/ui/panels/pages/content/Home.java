@@ -262,16 +262,16 @@ public class Home extends ContentPanel {
     }
 
     public enum StepInfo {
-        READ("Lecture du fichier json..."),
-        DL_LIBS("Téléchargement des libraries..."),
-        DL_ASSETS("Téléchargement des ressources..."),
-        EXTRACT_NATIVES("Extraction des natives..."),
-        FORGE("Installation de forge..."),
+        READ("Reading of the json file..."),
+        DL_LIBS("Download of the libraries..."),
+        DL_ASSETS("Download of the ressources..."),
+        EXTRACT_NATIVES("Natives extractions..."),
+        FORGE("Forge Instalmation..."),
         FABRIC("Installation de fabric..."),
-        MODS("Téléchargement des mods..."),
+        MODS("Download of mods..."),
         EXTERNAL_FILES("Téléchargement des fichier externes..."),
         POST_EXECUTIONS("Exécution post-installation..."),
-        END("Finit !");
+        END("Finish !");
         String details;
 
         StepInfo(String details) {
