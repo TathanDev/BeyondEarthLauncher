@@ -83,11 +83,11 @@
       //Placebo
       "projectID": 283644,
       "fileID": 4452975
-    }//,
-    //{
+    },
+    {
       //WatchDog Anti Cheat
-      //"projectID": 310343,
-      //"fileID": 4046618
-    //}
+      "projectID": 310343,
+      "fileID": 4046618
+    }
   ]
 }
